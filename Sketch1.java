@@ -1,36 +1,95 @@
 import processing.core.PApplet;
 
 public class Sketch1 extends PApplet {
-	
-	
+
+  //Declare Variables
+  
+  float circleYOne = 0;
+  float circleYTwo = 0;
+
+  float playerX = 30;
+  float playerY = 200;
+  float[] circleX = new float[30];
+  float[] circleY = new float[30];
+  boolean[] boolSnowShow = new boolean[30];
+  int intLives = 3;
+
+
   /**
    * Called once at the beginning of execution, put your size all in this method
    */
   public void settings() {
-	// put your size call here
+
+    //declare size
+  
     size(400, 400);
+
+    //declares position of the black snowballs
+    for (int i = 0; i < circleY.length; i++) {
+      circleY[i] = random(height);
+      circleX[i] = random(width);  
+    }
+
+    //Decides if snow is visible or not
+    for (int i = 0; i < circleY.length; i++) {
+      circleY[i] = random(height);
+      boolSnowShow[i] = true;
+    }
   }
 
-  /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
-   */
   public void setup() {
-    background(210, 255, 173);
+
+  background(3, 252, 132);
+  for(int i = 0; i < circleY.length; i++){
+    circleY[i] = random(200, 400);
+    circleX[i] = random(200, 400);
+    
+  }
   }
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
   public void draw() {
-	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
 
-    stroke(255);
-    line(50, 125, 70, 50);  
+  //draw background
+  background(3, 252, 132);
+
+  //Make Player
+  fill(200);
+  ellipse(playerX, playerY, 20, 20);
+  
+  //Draws Black Snowballs on screen
+  background(50);
+
+  ellipse(100, circleYOne, 25, 25);
+  ellipse(200, circleYTwo, 25, 25);
+
+  circleYOne++;
+  circleYTwo += 2;
+
+  if (circleYOne > height) {
+    circleYOne = 0;
   }
   
-  // define other methods down here.
+  if(circleYTwo > height){
+   circleYTwo = 0; 
+  }
+}
+  //method to move the player
+  public void keyPressed() {
+
+  if (key == 'w') {
+    playerY-=4;
+  }
+  if (key == 's') {
+    playerY+=4;
+  }
+  if (key == 'a') {
+    playerX-=4;
+  }
+  if (key == 'd') {
+    playerX+=4; 
+  }
+
+  
+    }
+
 }
