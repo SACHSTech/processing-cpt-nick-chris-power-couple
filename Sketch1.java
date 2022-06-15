@@ -18,6 +18,8 @@ public class Sketch1 extends PApplet {
  
   int[] speedEnemy = new int[20];
 
+  
+
   float playerX = 30;
   float playerY = 200;
   float[] circleX = new float[30];
@@ -39,7 +41,7 @@ public class Sketch1 extends PApplet {
 
     //declares position of the black snowballs
     for (int i = 0; i < circleY.length; i++) {
-      circleY[i] = random(height);
+      circleY[i] = random(-500);
       circleX[i] = random(width);  
     }
 
@@ -49,9 +51,10 @@ public class Sketch1 extends PApplet {
       boolSnowShow[i] = true;
     }
 
+    
+
  /*    for (int i = 0; i <= 10; i++) {
       speedEnemy[i] = i;
-
       if (playerX);
     }
     */
@@ -63,7 +66,7 @@ public class Sketch1 extends PApplet {
 
   background(3, 252, 132);
   for(int i = 0; i < circleY.length; i++){
-    circleY[i] = random(200, 400);
+    circleY[i] = random(-400, 0);
     circleX[i] = random(200, 400);
     
   }
@@ -201,222 +204,305 @@ public class Sketch1 extends PApplet {
   }
   public void level1(){
 
-       //draw background
-  //background(3, 252, 132);
+ //draw background
+ background(3, 252, 132);
 
-  
-  
-  //Draws Black Snowballs on screen
-  background(50);
-  //Make Player
-  fill(200);
-  ellipse(playerX, playerY, 20, 20);
+ //Make Player
+ fill(200);
+ ellipse(playerX, playerY, 20, 20);
+ 
+ //Draws Black Snowballs on screen
+ for (int i = 0; i < circleY.length; i++) {
+   float circleX = width * i / circleY.length;
+   if (boolSnowShow[i]) {
+     fill(0);
+     ellipse(circleX, circleY[i], 25, 25);
+   }
+   
+   circleY[i]+= 1;
 
-  //make image fall
+   if (circleY[i] > height) {
+     circleY[i] = 0;
+   }
 
-  
+   // Slows down and speeds black snowfall
+ if (keyPressed) {
+   if (keyCode == UP) {
+     circleY[i]-=2;
+ }
+   else if (keyCode == DOWN) {
+     circleY[i]+=2;
+   }
+ }
+   
+ //Makes user lose lives
+ if (playerX >= circleX-12.5 && playerX <= circleX+12.5 && playerY >= circleY[i]-12.5 && playerY <= circleY[i]+12.5 && boolSnowShow[i]){
+   intLives = intLives - 1;
+   boolSnowShow[i] = false;
+   }
 
-  image( imgJohn, 100, speedYOne);
-  image( imgJohn, 300, speedYTwo);
-  image( imgJohn, 300, speedYTwoTwo);
-  image( imgJohn, 300, speedYTwoThree);
-  image( imgJohn, 300, speedYTwoFour);
-  image( imgJohn, 300, speedYTwoOne);
-  image( imgJohn, 200, speedYThree);
-  image( imgJohn, 600, speedYFour);
+ //Mouse click removes circles
+ if (mouseX >= circleX-12.5 && mouseX <= circleX+12.5 &&   mouseY >= circleY[i]-12.5 && mouseY <= circleY[i]+12.5 && mousePressed == true) {
+   boolSnowShow[i] = false;
+ }
 
-  
+ // Lives display
+ if (intLives == 3) {
+   fill(252, 186, 3); 
+   rect(385, 5, 10, 10);
+   rect(370, 5, 10, 10);
+   rect(355, 5, 10, 10);
+ }
+ if (intLives == 2) {
+   fill(252, 186, 3); 
+   rect(385, 5, 10, 10);
+   rect(370, 5, 10, 10);
+ }
+ if (intLives == 1) {
+   fill(252, 186, 3); 
+   rect(385, 5, 10, 10);
+ }
+ if (intLives <= 0) {
+   background(255);
 
-  speedYOne++;
-  speedYTwo += speedEnemy[10];
-  speedYTwoOne += speedEnemy[10];
-  speedYTwoTwo += 2;
-  speedYTwoThree += 2;
-  speedYTwoFour += 2;
-  speedYThree+= 4;
-  speedYFour += 8;
-  
+   fill(0, 0, 255); // Blue
+    textSize(100);
+    text("YOU LOSE!!!", 100, 250);
 
-  if (speedYOne > height) {
-    speedYOne = 0;
+    //back to menu button
+
+    if ((mouseX >= 50 && mouseX <= 750) && (mouseY >= 350 && mouseY <= 400)) {
+      fill(0, 0, 255); // Blue
+      rect(50, 350, 700, 50);
+
+      fill(255); // White
+      textSize(50);
+      text("Main Menu", 55, 395);
+
+      if (mousePressed == true) {
+        playerX = 100;
+        screen = 1;
+        intLives = 3;
+        circleY[i] = random(-400, 0);
+      }
+    }
+    else {
+      fill(255); // white
+      rect(50, 350, 700, 50);
+
+      fill(0, 0, 255); // Blue
+      textSize(50);
+      text("Main Menu", 55, 395);     
   }
-  
-  if(speedYTwo > height){
-    speedYTwo = 0; 
-   }
+ }
 
-   if(speedYTwoOne > height){
-    speedYTwoOne = 0; 
-   }
-   if(speedYTwoTwo > height){
-    speedYTwoTwo = 0; 
-   }
-   if(speedYTwoThree > height){
-    speedYTwoThree = -10; 
-   }
-   if(speedYTwoFour > height){
-    speedYTwoFour = -10; 
-   }
-
-  if(speedYThree > height){
-   speedYThree = 0; 
-  }
-
-  if(speedYFour > height){
-    speedYFour = 0; 
-   }
-
-  if(speedYTwoOne > height){
-    speedYTwoOne = 0;}
-
-    if(playerX >= 800){
+ if(playerX >= 800){
       screen = 5;
-  }
-  }
 
+ }
+  
+ }}
   public void level2(){
 
-     //Draws Black Snowballs on screen
-  background(50);
-  //Make Player
-  fill(200);
-  ellipse(playerX, playerY, 20, 20);
+ //draw background
+ background(3, 252, 132);
 
-  //make image fall
+ //Make Player
+ fill(200);
+ ellipse(playerX, playerY, 20, 20);
+ 
+ //Draws Black Snowballs on screen
+ for (int i = 0; i < circleY.length; i++) {
+   float circleX = width * i / circleY.length;
+   if (boolSnowShow[i]) {
+     fill(0);
+     ellipse(circleX, circleY[i], 25, 25);
+   }
+   
+   circleY[i]+= 2;
 
-  
+   if (circleY[i] > height) {
+     circleY[i] = 0;
+   }
 
-  image( imgJohn, 100, speedYOne);
-  image( imgJohn, 300, speedYTwo);
-  image( imgJohn, 300, speedYTwoTwo);
-  image( imgJohn, 300, speedYTwoThree);
-  image( imgJohn, 300, speedYTwoFour);
-  image( imgJohn, 300, speedYTwoOne);
-  image( imgJohn, 200, speedYThree);
-  image( imgJohn, 600, speedYFour);
+   // Slows down and speeds black snowfall
+ if (keyPressed) {
+   if (keyCode == UP) {
+     circleY[i]-=2;
+ }
+   else if (keyCode == DOWN) {
+     circleY[i]+=2;
+   }
+ }
+   
+ //Makes user lose lives
+ if (playerX >= circleX-12.5 && playerX <= circleX+12.5 && playerY >= circleY[i]-12.5 && playerY <= circleY[i]+12.5 && boolSnowShow[i]){
+   intLives = intLives - 1;
+   boolSnowShow[i] = false;
+   }
 
-  
+ //Mouse click removes circles
+ if (mouseX >= circleX-12.5 && mouseX <= circleX+12.5 &&   mouseY >= circleY[i]-12.5 && mouseY <= circleY[i]+12.5 && mousePressed == true) {
+   boolSnowShow[i] = false;
+ }
 
-  speedYOne++;
-  speedYTwo += speedEnemy[10];
-  speedYTwoOne += speedEnemy[10];
-  speedYTwoTwo += 2;
-  speedYTwoThree += 2;
-  speedYTwoFour += 2;
-  speedYThree+= 4;
-  speedYFour += 8;
-  
+ // Lives display
+ if (intLives == 3) {
+   fill(252, 186, 3); 
+   rect(385, 5, 10, 10);
+   rect(370, 5, 10, 10);
+   rect(355, 5, 10, 10);
+ }
+ if (intLives == 2) {
+   fill(252, 186, 3); 
+   rect(385, 5, 10, 10);
+   rect(370, 5, 10, 10);
+ }
+ if (intLives == 1) {
+   fill(252, 186, 3); 
+   rect(385, 5, 10, 10);
+ }
+ if (intLives <= 0) {
+   background(255); 
 
-  if (speedYOne > height) {
-    speedYOne = 0;
+   fill(0, 0, 255); // Blue
+    textSize(100);
+    text("YOU LOSE!!!", 100, 250);
+
+    //back to menu button
+
+    if ((mouseX >= 50 && mouseX <= 750) && (mouseY >= 350 && mouseY <= 400)) {
+      fill(0, 0, 255); // Blue
+      rect(50, 350, 700, 50);
+
+      fill(255); // White
+      textSize(50);
+      text("Main Menu", 55, 395);
+
+      if (mousePressed == true) {
+        playerX = 100;
+        screen = 1;
+        intLives = 3;
+        circleY[i] = random(-400, 0);
+      }
+    }
+    else {
+      fill(255); // white
+      rect(50, 350, 700, 50);
+
+      fill(0, 0, 255); // Blue
+      textSize(50);
+      text("Main Menu", 55, 395);     
   }
-  
-  if(speedYTwo > height){
-    speedYTwo = 0; 
-   }
+ }
 
-   if(speedYTwoOne > height){
-    speedYTwoOne = 0; 
-   }
-   if(speedYTwoTwo > height){
-    speedYTwoTwo = 0; 
-   }
-   if(speedYTwoThree > height){
-    speedYTwoThree = -10; 
-   }
-   if(speedYTwoFour > height){
-    speedYTwoFour = -10; 
-   }
-
-  if(speedYThree > height){
-   speedYThree = 0; 
-  }
-
-  if(speedYFour > height){
-    speedYFour = 0; 
-   }
-
-  if(speedYTwoOne > height){
-    speedYTwoOne = 0;}
-
-    if(playerX >= 800){
+ if(playerX >= 800){
       screen = 5;
-  }
+
+ }
+  
+ }
   }
 
   public void level3(){
+//draw background
+background(3, 252, 132);
 
-     //Draws Black Snowballs on screen
-  background(50);
-  //Make Player
-  fill(200);
-  ellipse(playerX, playerY, 20, 20);
+//Make Player
+fill(200);
+ellipse(playerX, playerY, 20, 20);
 
-  //make image fall
-
-  
-
-  image( imgJohn, 100, speedYOne);
-  image( imgJohn, 300, speedYTwo);
-  image( imgJohn, 300, speedYTwoTwo);
-  image( imgJohn, 300, speedYTwoThree);
-  image( imgJohn, 300, speedYTwoFour);
-  image( imgJohn, 300, speedYTwoOne);
-  image( imgJohn, 200, speedYThree);
-  image( imgJohn, 600, speedYFour);
-
-  
-
-  speedYOne++;
-  speedYTwo += speedEnemy[10];
-  speedYTwoOne += speedEnemy[10];
-  speedYTwoTwo += 2;
-  speedYTwoThree += 2;
-  speedYTwoFour += 2;
-  speedYThree+= 4;
-  speedYFour += 8;
-  
-
-  if (speedYOne > height) {
-    speedYOne = 0;
+//Draws Black Snowballs on screen
+for (int i = 0; i < circleY.length; i++) {
+  float circleX = width * i / circleY.length;
+  if (boolSnowShow[i]) {
+    fill(0);
+    ellipse(circleX, circleY[i], 25, 25);
   }
   
-  if(speedYTwo > height){
-    speedYTwo = 0; 
-   }
+  circleY[i]+= 4;
 
-   if(speedYTwoOne > height){
-    speedYTwoOne = 0; 
-   }
-   if(speedYTwoTwo > height){
-    speedYTwoTwo = 0; 
-   }
-   if(speedYTwoThree > height){
-    speedYTwoThree = -10; 
-   }
-   if(speedYTwoFour > height){
-    speedYTwoFour = -10; 
-   }
-
-  if(speedYThree > height){
-   speedYThree = 0; 
+  if (circleY[i] > height) {
+    circleY[i] = 0;
   }
 
-  if(speedYFour > height){
-    speedYFour = 0; 
-   }
-
-  if(speedYTwoOne > height){
-    speedYTwoOne = 0;}
-
-    if(playerX >= 800){
-      screen = 5;
+  // Slows down and speeds black snowfall
+if (keyPressed) {
+  if (keyCode == UP) {
+    circleY[i]-=2;
+}
+  else if (keyCode == DOWN) {
+    circleY[i]+=2;
+  }
+}
+  
+//Makes user lose lives
+if (playerX >= circleX-12.5 && playerX <= circleX+12.5 && playerY >= circleY[i]-12.5 && playerY <= circleY[i]+12.5 && boolSnowShow[i]){
+  intLives = intLives - 1;
+  boolSnowShow[i] = false;
   }
 
+//Mouse click removes circles
+if (mouseX >= circleX-12.5 && mouseX <= circleX+12.5 &&   mouseY >= circleY[i]-12.5 && mouseY <= circleY[i]+12.5 && mousePressed == true) {
+  boolSnowShow[i] = false;
+}
 
+// Lives display
+if (intLives == 3) {
+  fill(252, 186, 3); 
+  rect(385, 5, 10, 10);
+  rect(370, 5, 10, 10);
+  rect(355, 5, 10, 10);
+}
+if (intLives == 2) {
+  fill(252, 186, 3); 
+  rect(385, 5, 10, 10);
+  rect(370, 5, 10, 10);
+}
+if (intLives == 1) {
+  fill(252, 186, 3); 
+  rect(385, 5, 10, 10);
+}
+if (intLives <= 0) {
+  background(255);
   
+  fill(0, 0, 255); // Blue
+    textSize(100);
+    text("YOU LOSE!!!", 100, 250);
 
-  
+    //back to menu button
+
+    if ((mouseX >= 50 && mouseX <= 750) && (mouseY >= 350 && mouseY <= 400)) {
+      fill(0, 0, 255); // Blue
+      rect(50, 350, 700, 50);
+
+      fill(255); // White
+      textSize(50);
+      text("Main Menu", 55, 395);
+
+      if (mousePressed == true) {
+        playerX = 100;
+        screen = 1;
+        intLives = 3;
+        circleY[i] = random(-400, 0);
+      }
+    }
+    else {
+      fill(255); // white
+      rect(50, 350, 700, 50);
+
+      fill(0, 0, 255); // Blue
+      textSize(50);
+      text("Main Menu", 55, 395);     
+  }
+}
+
+if(playerX >= 800){
+     screen = 5;
+
+}
+ 
+}
   }
 
 
@@ -441,7 +527,8 @@ public class Sketch1 extends PApplet {
     
         if (mousePressed == true) {
           playerX = 100;
-         screen = 1;
+          screen = 1;
+          intLives = 3;
         }
       }
       else {
