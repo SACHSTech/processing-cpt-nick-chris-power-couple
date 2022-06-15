@@ -4,7 +4,7 @@ import processing.core.PImage;
 public class Sketch1 extends PApplet {
 
   //Declare Variables
-  int screen = 1;
+  int screen = 6;
 
   float speedYOne = 0;
   float speedYTwo = 0;
@@ -22,10 +22,10 @@ public class Sketch1 extends PApplet {
 
   float playerX = 30;
   float playerY = 200;
-  float[] circleX = new float[30];
-  float[] circleY = new float[30];
-  boolean[] boolSnowShow = new boolean[30];
-  int intLives = 3;
+  float[] circleX = new float[60];
+  float[] circleY = new float[60];
+  boolean[] boolSnowShow = new boolean[60];
+  int intLives = 1;
 
   PImage imgJohn;
 
@@ -41,8 +41,8 @@ public class Sketch1 extends PApplet {
 
     //declares position of the black snowballs
     for (int i = 0; i < circleY.length; i++) {
-      circleY[i] = random(-500);
-      circleX[i] = random(width);  
+      circleY[i] = random(-400);
+      circleX[i] = random(-300);  
     }
 
     //Decides if snow is visible or not
@@ -94,6 +94,10 @@ public class Sketch1 extends PApplet {
     youWin();
   }
 
+  if(screen == 6){
+    instruct();
+  }
+
   
 
 
@@ -117,8 +121,41 @@ public class Sketch1 extends PApplet {
   }
 
   
+
+  
     }
 
+
+  public void instruct(){
+
+    background(50);
+
+    textSize(25);
+    text("Avoid the falling objects as you get from ", 45, 145);
+    text("the left side to the right side!", 45, 170);
+
+
+    if ((mouseX >= 50 && mouseX <= 150) && (mouseY >= 250 && mouseY <= 300)) {
+      fill(0, 0, 255); // Blue
+      rect(50, 250, 100, 50);
+  
+      fill(255); // White
+      textSize(50);
+      text("OK", 55, 300);
+  
+      if (mousePressed == true) {
+       screen = 1;
+      }
+    }
+    else {
+      fill(255); // white
+      rect(50, 250, 100, 50);
+  
+      fill(0, 0, 255); // Blue
+      textSize(50);
+      text("OK", 55, 300);
+    }
+  }
 
   public void menu(){
 
@@ -128,6 +165,8 @@ public class Sketch1 extends PApplet {
     fill(255); // White
       textSize(50);
       text("Main Menu", 55, 145);
+
+    //level 1
 
     if ((mouseX >= 50 && mouseX <= 750) && (mouseY >= 200 && mouseY <= 250)) {
       fill(0, 0, 255); // Blue
@@ -282,7 +321,7 @@ public class Sketch1 extends PApplet {
       if (mousePressed == true) {
         playerX = 100;
         screen = 1;
-        intLives = 3;
+        intLives = 1;
         circleY[i] = random(-400, 0);
       }
     }
@@ -382,7 +421,7 @@ public class Sketch1 extends PApplet {
       if (mousePressed == true) {
         playerX = 100;
         screen = 1;
-        intLives = 3;
+        intLives = 1;
         circleY[i] = random(-400, 0);
       }
     }
@@ -528,7 +567,7 @@ if(playerX >= 800){
         if (mousePressed == true) {
           playerX = 100;
           screen = 1;
-          intLives = 3;
+          intLives = 1;
         }
       }
       else {
