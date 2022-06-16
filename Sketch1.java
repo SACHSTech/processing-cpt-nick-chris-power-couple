@@ -45,6 +45,10 @@ public class Sketch1 extends PApplet {
       circleX[i] = random(-300);  
     }
 
+
+    //Use boolean to make the snowballs disapear
+    //uses for loop
+
     //Decides if snow is visible or not
     for (int i = 0; i < circleY.length; i++) {
       circleY[i] = random(height);
@@ -52,17 +56,13 @@ public class Sketch1 extends PApplet {
     }
 
     
-
- /*    for (int i = 0; i <= 10; i++) {
-      speedEnemy[i] = i;
-      if (playerX);
-    }
-    */
   }
 
   public void setup() {
 
   imgJohn = loadImage("Shrek_Johnson (1).jpg");
+
+  //for loop
 
   background(3, 252, 132);
   for(int i = 0; i < circleY.length; i++){
@@ -119,12 +119,7 @@ public class Sketch1 extends PApplet {
   if (key == 'd') {
     playerX+=4; 
   }
-
-  
-
-  
     }
-
 
   public void instruct(){
 
@@ -235,11 +230,6 @@ public class Sketch1 extends PApplet {
     }
 
     
-
-
-
-
-    
   }
   public void level1(){
 
@@ -250,6 +240,8 @@ public class Sketch1 extends PApplet {
  fill(200);
  ellipse(playerX, playerY, 20, 20);
  
+  //USE for
+
  //Draws Black Snowballs on screen
  for (int i = 0; i < circleY.length; i++) {
    float circleX = width * i / circleY.length;
@@ -350,6 +342,7 @@ public class Sketch1 extends PApplet {
  fill(200);
  ellipse(playerX, playerY, 20, 20);
  
+ //use for loops
  //Draws Black Snowballs on screen
  for (int i = 0; i < circleY.length; i++) {
    float circleX = width * i / circleY.length;
@@ -544,7 +537,6 @@ if(playerX >= 800){
 }
   }
 
-
   public void youWin(){
 
 
@@ -581,10 +573,6 @@ if(playerX >= 800){
         
   }
 }
-
-
-
-
 
 
 }
