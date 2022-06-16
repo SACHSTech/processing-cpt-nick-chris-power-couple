@@ -570,7 +570,6 @@ if(playerX >= 800){
         textSize(50);
         text("Main Menu", 55, 395);
 
-        
   }
 }
 
